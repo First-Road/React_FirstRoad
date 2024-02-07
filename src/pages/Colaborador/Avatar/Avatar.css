@@ -1,0 +1,15 @@
+.card:hover{
+    cursor: pointer;
+}
+
+.intro:hover{
+    height: 250px;
+    top: 150px;
+    background: black;
+
+}
+
+.intro:hover p{
+    opacity: 1;
+    visibility: visible;
+}
