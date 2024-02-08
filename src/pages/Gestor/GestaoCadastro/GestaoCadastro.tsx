@@ -159,8 +159,8 @@ const GestaoCadastro = () => {
                                             <ListaUsuarios
                                                 nome={usuario.nome}
                                                 nif={usuario.nif}
-                                                cargo={usuario.cargo.nome_cargo}
                                                 unidade={usuario.id_unidade.complemento}
+                                                cargo={usuario.nif}
                                             />
 
 
