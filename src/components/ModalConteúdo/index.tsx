@@ -9,7 +9,8 @@ const ModalConteudo = () => {
     function ChamarDadosApi() {
         api.get("conteudo")
             .then((response) => {
-                setConteudo(response.data)
+                setConteudo(response.data.id)
+                
                 console.table(response.data)
             })
             .catch((error) => {

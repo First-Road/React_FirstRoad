@@ -5,12 +5,12 @@ import { FaInfoCircle } from 'react-icons/fa'
 import styled from "styled-components";
 import { ReactNode } from "react";
 import { Link } from "react-router-dom";
+import BotaoPadrao from "../BotaoPadrao/BotaoPadrao";
 
 interface ModuloProps {
     titulo: ReactNode;
-    tituloCard: ReactNode
     textoModulo: ReactNode
-    textoCard: ReactNode
+    link: string
 }
 
 const Secao = styled.section`
@@ -51,11 +51,12 @@ const Conteudo = styled.div`
     flex-direction: column;
     width: 100%;
     align-items: center;
+    gap: 40px;
 
     p{
         font-size: 20px;
         text-align: center;
-        width: 90%;
+        width: 70%;
         @media screen and (max-width: 768px){
             font-size: 16px;
         }
@@ -134,72 +135,14 @@ const Suporte = styled(FaInfoCircle)`
     }
 `
 
-const CardInstrucao = styled.div`
+
+const ContainerBotao = styled.div`
+    width: 70%;
     display: flex;
-    align-items: center;
-    flex-direction: column;
-    height: 200px;
-    justify-content: space-evenly;
-    width: 80%;
-    background-color: var(--auxiliar-cor-7);
-    border-radius: 8px;
-    margin-bottom: 20px;
+    justify-content: flex-end;
+    padding-bottom: 50px;
 
-    h2{
-        font-family: PoppinsBold;
-        font-size: 25px;
-        color: white;
-        margin: 0px;
-
-        @media screen and (max-width: 768px){
-            font-size: 20px;
-        }
-
-        @media screen and (max-width: 520px){
-            font-size: 16px;
-        }
-    }
-
-    p{
-        font-size: 20px;
-        text-align: center;
-        width: 90%;
-        color: white;
-        margin: 0px;
-
-        @media screen and (max-width: 768px){
-            font-size: 16px;
-        }
-
-        @media screen and (max-width: 520px){
-            font-size: 14px; 
-        }
-    }
-
-    div{
-        display: flex;
-        justify-content: center;
-        gap: 20px;
-        
-        button{
-            padding: 8px;
-            width: 100px;
-            border: none;
-            background-color: var(--principal-cor-2);
-            border-radius: 8px;
-            color: white;
-            font-size: 16px;
-
-            &:hover{
-                background-color: var(--principal-cor-4);
-                transition: .7s;
-                transform: scale(1.1);
-            }  
-        }
-    }
 `
-
-
 
 
 
@@ -214,7 +157,7 @@ const Modulo = (props: ModuloProps) => {
                 <p>{props.textoModulo}</p>
 
                 <LinksContainer>
-                    <LinkEstilizado to=''>
+                    <LinkEstilizado to={props.link}>
                         <div>
                             <Material />
                             <span>Material do Módulo</span>
@@ -235,19 +178,9 @@ const Modulo = (props: ModuloProps) => {
                 </LinksContainer>
             </Conteudo>
 
-            <CardInstrucao>
-                <h2>{props.tituloCard}</h2>
-                <p>{props.textoCard}</p>
-                <div>
-                    <div>
-                        <button>Acessar</button>
-                    </div>
-
-                    <div>
-                        <button>Finalizar</button>
-                    </div>
-                </div>
-            </CardInstrucao>
+            <ContainerBotao>
+                <BotaoPadrao>Finalizar</BotaoPadrao>
+            </ContainerBotao>
         </Secao>
     )
 }

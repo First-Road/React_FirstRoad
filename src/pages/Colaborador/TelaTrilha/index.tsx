@@ -3,8 +3,8 @@ import EstilosGlobais from "../../../components/EstilosGlobais/EstilosGlobais"
 import MenuLateral from "../../../components/MenuLateral/MenuLateral"
 import api from "../../../utils/api"
 import styled from "styled-components"
-import NavegacaoHome from "../../../components/NavegacaoHome"
 import NavegacaoTelaTrilha from "../../../components/NavegacaoTelaTrilha"
+import { useParams } from "react-router-dom"
 
 
 const Secao = styled.section`
@@ -12,39 +12,34 @@ const Secao = styled.section`
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: 70%;
     padding-top: 25px;
 
-    h1{
-        font-size: 35px;
-        font-family: PoppinsBold;
-        color: white;
-        width: 51%;
-        margin: 0;
-    }
+    
     ul{
         list-style: none;
         padding: 0;
         display: flex;
-        flex-direction: column;
         gap: 10px;
         justify-content: center;
         flex-wrap: wrap;
+        height: 100%;
+        align-items: flex-start;
         
     }
 `
- 
+
 const TelaTrilha = () => {
     const [conteudo, setconteudo] = useState<any>([])
+
 
     function listarConteudos() {
 
 
-        api.get("conteudos")
+        api.get("/conteudo")
             .then((response: any) => {
                 setconteudo(response.data);
                 console.table(response.data)
@@ -54,29 +49,47 @@ const TelaTrilha = () => {
             })
     }
 
+    const Titulo = styled.div`
+        width: 80%;
+        padding: 80px;
+        h1{
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        font-size: 35px;
+        font-family: PoppinsBold;
+        color: white;
+        margin: 0;
+        }
+
+    `
+
     useEffect(() => {
         listarConteudos();
     }, [])
-    return(
+    return (
         <>
             <EstilosGlobais />
             <main>
                 <MenuLateral />
 
                 <Secao>
-                    <h1>Meus Conteúdos</h1>
-                    
+                    <Titulo>
+                        <h1>Meus Conteúdos</h1>
+                    </Titulo>
+
+
                     <ul>
-                       {
-                         conteudo.map((conteudo: any) => {
-                            return <NavegacaoTelaTrilha
-                                key={conteudo.id}
-                                toValue="/PGModulos"
-                                titulo={conteudo.titulo_conteudo}
-                                descricao={conteudo.descricao_conteudo}
-                            />
-                        })
-                       }
+                        {
+                            conteudo.map((conteudo: any) => {
+                                return <NavegacaoTelaTrilha
+                                    id={conteudo.id}
+                                    key={conteudo.id}
+                                    titulo={conteudo.titulo_conteudo}
+                                    descricao={conteudo.descricao_conteudo}
+                                />
+                            })
+                        }
                     </ul>
                 </Secao>
 

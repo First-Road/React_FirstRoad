@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components"
+import { useNavigate } from "react-router-dom";
 
 interface ItemProps {
     titulo: string;
     descricao: string;
-    toValue: string
+    id: string;
 }
 
 const LinkEstilizado = styled(Link)`
@@ -14,10 +15,19 @@ const LinkEstilizado = styled(Link)`
     height: 100%;
     justify-content: center;
     color: #FFFFFF;
-    font-size: 1.4rem;
-    font-family: PoppinsBold;
-    gap: 20px;
+    gap: 10px;
     text-decoration: none;
+    
+    
+    p{
+        height: 100%;
+        font-size: 16px;
+        margin: 0px;
+        padding: 10px;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+    }
     &:hover{
         background-color: var(--principal-cor-4);
         border-radius: 25px;
@@ -27,9 +37,26 @@ const LinkEstilizado = styled(Link)`
     
 `
 
+const ContainerTitulo = styled.div`
+    width: 100%;
+    height: 20%;
+    span{
+        height: 100%;
+        font-size: 20px;
+        margin: 0px;
+        font-family: PoppinsBold;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 20px 10px 0px 10px;
+    }
+`
+    
+
+
 const NavegacaoEstilizada = styled.li`
-    width: 150px;
-    height: 150px;
+    width: 250px;
+    height: 250px;
     background-color: var(--principal-cor-2);
     border-radius: 25px;
 
@@ -40,12 +67,23 @@ const NavegacaoEstilizada = styled.li`
 `
 
 
+
+
 const NavegacaoTelaTrilha = (props: ItemProps) => {
+
+    const navigate = useNavigate();
+
+    function redirecionarConteudo() {
+        navigate("/PGModulos/" + props.id);
+    }
     return (
         <>
-            <NavegacaoEstilizada>
-                <LinkEstilizado to={props.toValue}>
-                    <span>{props.titulo}</span>
+            <NavegacaoEstilizada onClick={redirecionarConteudo}>
+                <LinkEstilizado>
+                    <ContainerTitulo>
+                        <span>{props.titulo}</span>
+                    </ContainerTitulo>
+
                     <p>{props.descricao}</p>
                 </LinkEstilizado>
             </NavegacaoEstilizada>

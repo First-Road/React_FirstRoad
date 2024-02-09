@@ -37,7 +37,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Route path='/suporte' element={<Suporte />} />
         <Route path='/certificados' element={<Certificados />} />
         <Route path='/visualizarCertificado' element={<VisualizarCertificado />} />
-        <Route path='/pgModulos' element={<PgModulos />} />
+        <Route path='/pgModulos/:idConteudo' element={<PgModulos />} />
         <Route path='/pesquisaSatisfacao' element={<PesquisaSatisfacao />} />
         <Route path='/editarGestor' element={<EditarPerfilGestor />} />
         <Route path='/gestaoCadastro' element={<GestaoCadastro />} />
