@@ -20,6 +20,7 @@ import TrilhaGestor from './pages/Gestor/TrilhaGestor'
 import ModalConteudo from './components/ModalConteúdo'
 import ListaTrilha from './pages/Colaborador/ListaTrilha'
 import TelaTrilha from './pages/Colaborador/TelaTrilha'
+import Quiz from './pages/Colaborador/Quiz/Quiz'
 
 
 
@@ -47,6 +48,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Route path='/modal' element={<ModalConteudo  />} />
         <Route path='/listaTrilha' element={<ListaTrilha  />} />
         <Route path='/telaTrilha' element={<TelaTrilha />} />
+        <Route path='/quiz' element={<Quiz />} />
       </Routes>
     </BrowserRouter>
 

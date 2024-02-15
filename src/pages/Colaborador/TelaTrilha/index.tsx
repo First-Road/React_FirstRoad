@@ -34,6 +34,7 @@ const Secao = styled.section`
 
 const TelaTrilha = () => {
     const [conteudo, setconteudo] = useState<any>([])
+    const [concluido, setConcluido] = useState<boolean>(false)
 
 
     function listarConteudos() {
@@ -47,6 +48,12 @@ const TelaTrilha = () => {
             .catch((error: any) => {
                 console.log("Error ao realizar um requisição", error);
             })
+    }
+
+    function verificarConteudoConcluido() {
+      if(conteudo.concluido){
+        
+      }
     }
 
     const Titulo = styled.div`
@@ -66,6 +73,7 @@ const TelaTrilha = () => {
 
     useEffect(() => {
         listarConteudos();
+        verificarConteudoConcluido();
     }, [])
     return (
         <>

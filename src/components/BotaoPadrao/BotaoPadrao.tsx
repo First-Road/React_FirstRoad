@@ -17,12 +17,14 @@ const BotaoEstilizado = styled.button<CSSObject>`
     cursor: pointer;
 `
 
+type Props = {
+    type: any
+    children: any
+}
 
-
-
-const BotaoPadrao = ( {children}: any) => {
+const BotaoPadrao = ( {children, type}: Props) => {
     return (
-        <BotaoEstilizado  type="submit">{children}</BotaoEstilizado>
+        <BotaoEstilizado  type={type}>{children}</BotaoEstilizado>
 
     )
 }

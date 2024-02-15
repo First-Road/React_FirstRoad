@@ -5,7 +5,6 @@ interface InputProps{
     type: any
     placeholder: any
     children: ReactNode
-    onChange?: any
 }
 
 
@@ -20,7 +19,7 @@ const InputPadrao = (props: InputProps) => {
             <input 
                 type={props.type} 
                 placeholder={props.placeholder}
-                onChange={props.onChange}
+                minLength={6}
             />
         </>
     )

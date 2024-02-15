@@ -12,7 +12,7 @@ import { TiThMenu } from 'react-icons/ti'
 const Icone = styled(Link)`
     display: none;
     
-    @media screen and (max-width:768px){
+    @media screen and (max-width:1000px){
         display: flex;
         background-color: var(--principal-cor-2);
         padding: 7px;
@@ -26,7 +26,6 @@ const Icone = styled(Link)`
 const SombraEstilizada = styled.div`
 
     @media screen and (max-width: 1000px) {
-        height: 100svh;
         width: 100vw;
         background-color: #0000004f;
         position: fixed;
@@ -111,40 +110,33 @@ const MenuEstilizado = styled.aside`
 
 
 const MenuLateral = ({ children, toValue, ativo = false }: any) => {
-    useEffect(() => {
-        const handleResize = () => {
-            const asideGestor: any = window.innerWidth;
-            const aside: any = document.getElementById("aside");
-
-            if (asideGestor >= 1000) {
-                aside.style.left = "0px";
-            } else {
-                aside.style.left = "-265px";
-            }
-        };
-        window.addEventListener("resize", handleResize);
-
-        return () => {
-            window.removeEventListener("resize", handleResize);
-        };
-    }, []);
-
-    const mostrarMenu = (event: any) => {
-        event.preventDefault();
-        const sombra: any = document.getElementById("sombra");
-        const body: any = document.getElementById("body");
-        const aside: any = document.getElementById("aside");
-  
-        if (window.getComputedStyle(aside!).left === "0px") {
-          aside.style.left = "-265px";
-          sombra.style.right = "110vw";
-          body.style.overflow = "auto";
-        } else {
-          aside.style.left = "0px";
-          sombra.style.right = "0px";
-          body.style.overflow = "hidden";
+    addEventListener("resize", () => {
+        const aside: any = document.getElementById("aside")
+        const eventoMenu: any = window.innerWidth
+        if (eventoMenu >= "1000") {
+          aside.style.left = "0px"
         }
-      };
+        else {
+          aside.style.left = "-265px"
+    
+        }
+      });
+    
+      function mostrarMenu() {
+    
+        const sombra: any = document.getElementById("sombra")
+        const body: any = document.getElementById("body")
+        const aside: any = document.getElementById("aside")
+    
+        if (window.getComputedStyle(aside).left == "0px") {
+          aside.style.left = "-265px"
+          sombra.style.right = "110vw"
+        }
+        else {
+          aside.style.left = "0px"
+          sombra.style.right = "0px"
+        }
+      }
 
 
     return (

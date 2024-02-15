@@ -46,13 +46,12 @@ const EstilosGlobais = createGlobalStyle`
     }
     body {
     margin: 0;
-    min-height: 100vh;
     overflow: hidden;
+    
     }
     main {
-    display: flex;
-    width: 100dvw;
-    overflow: hidden;
+        display: flex;
+        height: 100%;
     }
     h1 {
     font-size: 2em;
