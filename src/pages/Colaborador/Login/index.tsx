@@ -6,8 +6,9 @@ import { AiFillEye } from "react-icons/ai";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom'
 import api from "../../../utils/api";
-//import { UserContext } from "../../../context/auth";
 import { jwtDecode } from "jwt-decode";
+//import { UserContext } from "../../../context/auth";
+
 
 
 
@@ -165,7 +166,7 @@ const Login = () => {
 
         api.post("login", usuario)
             .then((response) => {
-                const decoded = jwtDecode(response.data.token)
+                const decoded = (response.data.token)
                 console.log(decoded.idUsuario);
                 const tipo = decoded.tipo_usuario
                 localStorage.setItem("token", JSON.stringify(decoded))

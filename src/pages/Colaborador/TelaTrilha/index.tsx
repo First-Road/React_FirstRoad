@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react"
+import { ReactNode, useEffect, useState } from "react"
 import EstilosGlobais from "../../../components/EstilosGlobais/EstilosGlobais"
 import MenuLateral from "../../../components/MenuLateral/MenuLateral"
 import api from "../../../utils/api"
 import styled from "styled-components"
 import NavegacaoTelaTrilha from "../../../components/NavegacaoTelaTrilha"
 import { useParams } from "react-router-dom"
+import Trilha from "../Trilha"
 
 
 const Secao = styled.section`
@@ -32,16 +33,14 @@ const Secao = styled.section`
     }
 `
 
+
 const TelaTrilha = () => {
-    const [conteudo, setconteudo] = useState<any>([])
-
-
+    const [conteudo, setConteudo] = useState<any[]>([])
+    
     function listarConteudos() {
-
-
-        api.get("/conteudo")
+        api.get("conteudo" )
             .then((response: any) => {
-                setconteudo(response.data);
+                setConteudo(response.data)
                 console.table(response.data)
             })
             .catch((error: any) => {
@@ -63,6 +62,8 @@ const TelaTrilha = () => {
         }
 
     `
+
+
 
     useEffect(() => {
         listarConteudos();
@@ -87,6 +88,7 @@ const TelaTrilha = () => {
                                     key={conteudo.id}
                                     titulo={conteudo.titulo_conteudo}
                                     descricao={conteudo.descricao_conteudo}
+
                                 />
                             })
                         }

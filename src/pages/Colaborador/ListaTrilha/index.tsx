@@ -5,6 +5,7 @@ import LinksAsideColaborador from "../../../components/LinksAsideColaborador/Lin
 import BotaoTrilha from "../../../components/BotaoTrilha"
 import api from "../../../utils/api";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom"
 const Secao = styled.section`
     background-image: url(../../../../public/EstradaDefinitiva.jpeg);
     flex-grow: 1;
@@ -70,7 +71,7 @@ const ListaTrilha = () => {
                             trilha.map((trilha: any) => {
                                 return <BotaoTrilha
                                     key={trilha.id}
-                                    toValue="/PGModulos"
+                                    toValue="/telaTrilha"
                                     titulo={trilha.titulo_trilha}
                                     descricao={trilha.descricao_trilha}
                                 />
