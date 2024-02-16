@@ -1,11 +1,14 @@
 import styled from "styled-components"
 import BotaoPadrao from "../../../components/BotaoPadrao/BotaoPadrao"
-import { SetStateAction, useEffect, useState } from "react"
-import api from "../../../utils/api"
 import InputPadrao from "../../../components/InputPadrao/InputPadrao"
 import EstilosGlobais from "../../../components/EstilosGlobais/EstilosGlobais"
 import MenuLateral from "../../../components/MenuLateral/MenuLateral"
 import LinksAsideGestor from "../../../components/LinksAsideGestor/LinksAsideGestor"
+import { useForm } from "react-hook-form"
+import * as z from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+import api from "../../../utils/api"
+import {useEffect, useState} from "react"
 
 const Secao = styled.section`
     width: 100%;
@@ -31,6 +34,11 @@ const Secao = styled.section`
         width: 70dvw;
         max-width: 1000px;
         justify-content: center;
+
+        p{
+            margin: 0px;
+            color: red;
+        }
 
        @media screen and (max-width: 1000px){
         width: 90dvw;
@@ -133,62 +141,90 @@ const BotaoContainer = styled.div`
     justify-content: flex-end;
     height: 100%;
 `
+type FormProps = z.infer<typeof schema>
+
+
+
+const schema = z.object({
+    password: z.string().min(6, "A senha precisa ter pelo menos 6 caracteres"),
+    confirmPassword: z.string(),
+    nome: z.string().min(5, "Por favor digite um nome valido!"),
+    unidades: z.string(),
+    nif: z.string().length(8, "Por favor Digite um nif de 8 caracteres"),
+    email: z.string().email("Por favor Digite um email valido"),
+    dataNascimento: z.string(),
+    departamento: z.string(),
+}).refine((fields) => fields.password === fields.confirmPassword, {
+    path: ['confirmPassword'],
+    message: "As senhas precisam ser iguais"
+}).refine((fields) => fields.unidades.length, {
+    path: ['unidades'],
+    message: "Por favor, selecione uma unidade"
+});
 
 
 
 const CadastroColaborador = () => {
-
-    const [nomeCompleto, setNomeCompleto] = useState<string>("")
-    const [nif, setNif] = useState<string>("")
-    const [senha, setSenha] = useState<string>("")
-    const [email, setEmail] = useState<string>("")
-    const [dataNascimento, setDataNascimento] = useState<string>("")
-    const [tipoUsuario, setTipoUsuario] = useState<string>("COLABORADOR")
-    const [cargos, setCargos] = useState<any[]>([]);
-    const [unidades, setUnidades] = useState<any[]>([]);
-
-    function CadastrarColaborador(event: any) {
-        event.preventDefault();
-
-        const formData = new FormData();
-
-        formData.append("nome", nomeCompleto)
-        formData.append("nif", nif)
-        formData.append("senha", senha)
-        formData.append("email", email)
-        formData.append("data_nascimento", dataNascimento)
-        formData.append("tipo_Usuario", tipoUsuario)
+    const {
+        register,
+        handleSubmit,
+        formState: { errors }
+    } = useForm<FormProps>({
+        criteriaMode: "all",
+        mode: "all",
+        reValidateMode: "onChange",
+        resolver: zodResolver(schema),
+        defaultValues: {
+            confirmPassword: '',
+            password: '',
+            dataNascimento: '',
+            email: '',
+            nif: "",
+            nome: '',
+            unidades: '',
+            departamento: ""
 
 
-        api.post("usuarios", formData)
+        }
+    });
+
+
+    // const handleSubmitData = (data: FormProps) => {
+    //     console.log("submit", data)
+    //     api.post("usuarios", data)
+    //         .then((response: any) => {
+    //             console.log(response);
+    //             alert("Usuário cadastrado com sucesso!😊🤗");
+    //         })
+    //         .catch((error: any) => {
+    //             console.log(error);
+    //             alert("Falha ao cadastrar um novo usuário");
+    //         })
+
+    // }
+
+    const [unidades, setUnidades] = useState<any[]>([])
+    const [departamento, setDepartamento] = useState<[]>([])
+
+    function listarUnidades() {
+        api.post("unidades")
             .then((response: any) => {
-                console.table(response)
-                alert("Usuário cadastrado com sucesso!")
+                console.table(response.data)
+                setUnidades(response.data)
             })
             .catch((error: any) => {
-                console.log(error)
-                alert("Falha ao cadastrar um novo usuário")
-            })
-    }
-
-
-
-    function ListarUnidades() {
-        api.get("unidades")
-            .then((response: any) => {
-                setUnidades(response.data);
-                console.log(response.data)
-            })
-            .catch((error: any) => {
+                console.log(error);
                 console.log("Error ao realizar um requisição", error);
             })
     }
 
 
-
     useEffect(() => {
-        ListarUnidades();
-    }, []);
+        listarUnidades()
+    }, [])
+
+
+
     return (
 
         <>
@@ -200,29 +236,34 @@ const CadastroColaborador = () => {
                 <Secao>
                     <h1>Cadastrar Colaborador</h1>
                     <input type="file" />
-                    <form action="" method="POST" onSubmit={CadastrarColaborador}>
+                    <form action="" method="POST" >
                         <DivInputContainer>
                             <DivInput>
                                 <label htmlFor="Nome Completo">Nome Completo</label>
                                 <input
                                     type="text"
                                     placeholder="Digite seu nome completo"
-                                    required
-                                    onChange={(e) => {
-                                        setNomeCompleto(e.target.value)
-                                    }}
+                                    {...register("nome")}
+
                                 />
+                                {errors.nome?.message && (
+                                    <p>{errors.nome?.message}</p>
+                                )}
+
                             </DivInput>
                             <DivInput>
                                 <label htmlFor="Nif">NIF</label>
                                 <input
                                     type="number"
                                     placeholder="00000000"
-                                    required
-                                    onChange={(e) => {
-                                        setNif(e.target.value)
-                                    }}
+                                    {...register("nif")}
+                                    maxLength={8}
+
                                 />
+                                {errors.nif?.message && (
+                                    <p>{errors.nif?.message}</p>
+                                )}
+
                             </DivInput>
 
                             <DivSenhaContainer>
@@ -232,9 +273,12 @@ const CadastroColaborador = () => {
                                         children="Senha"
                                         placeholder="Digite a senha do colaborador"
                                         type="password"
-                                        onChange={(e: { target: { value: SetStateAction<string> } }) => setSenha(e.target.value)}
+                                        {...register("password")}
 
                                     />
+                                    {errors.password?.message && (
+                                        <p>{errors.password?.message}</p>
+                                    )}
                                 </DivSenha>
 
                                 <DivSenha>
@@ -243,7 +287,12 @@ const CadastroColaborador = () => {
                                         children="Confirme a senha"
                                         placeholder="Confirme a senha"
                                         type="password"
+                                        {...register("confirmPassword")}
                                     />
+                                    {errors.confirmPassword?.message && (
+                                        <p>{errors.confirmPassword?.message}</p>
+                                    )}
+
                                 </DivSenha>
                             </DivSenhaContainer>
 
@@ -252,11 +301,12 @@ const CadastroColaborador = () => {
                                 <input
                                     type="email"
                                     placeholder="email@enail.vw.com.br"
-                                    required
-                                    onChange={(e) => {
-                                        setEmail(e.target.value)
-                                    }}
+                                    {...register("confirmPassword")}
                                 />
+                                {errors.email?.message && (
+                                    <p>{errors.email?.message}</p>
+                                )}
+
                             </DivInput>
                         </DivInputContainer>
 
@@ -265,69 +315,54 @@ const CadastroColaborador = () => {
                                 <label htmlFor="Data de nascimento">Data de nascimento</label>
                                 <input
                                     type="date"
-                                    required
-                                    onChange={(e) => {
-                                        setDataNascimento(e.target.value)
-                                    }}
+                                    {...register("dataNascimento")}
                                 />
+                                {errors.dataNascimento?.message && (
+                                    <p>{errors.dataNascimento?.message}</p>
+                                )}
+
+
                             </DivInput>
 
                             <DivInput>
                                 <label htmlFor="Unidade">Unidade</label>
                                 <select
-                                    name="Selecione"
                                     aria-placeholder="Selecione"
-                                    // onChange={(e) => {
-                                    //     setUnidade(e.target.value)
-                                    // }}
-
-                                    value={unidades}
-                                    
+                                    {...register("unidades")}
+                                    value=""
                                 >
                                     <option disabled selected value="Selecione">Selecione</option>
-
                                     {
-                                        unidades.map((unidade: any) => {
-                                            return <option
-                                                value={unidade.id}
-                                                key={unidade.id}
-                                            >
-                                                {unidade.razao_social}
-                                            </option>
+                                        unidades.map((unidade: any, id: number) => {
+                                            return (
+                                                <option
+                                                    key={id}
+                                                    
+                                                >
+
+
+                                                </option>
+                                            )
                                         })
                                     }
                                 </select>
+
                             </DivInput>
 
                             <DivInput>
-                                <label htmlFor="Cargo">Cargo</label>
+                                <label htmlFor="Departamento">Departamento</label>
                                 <select
-                                    name="Selecione"
                                     aria-placeholder="Selecione"
-                                    // onChange={(e) => {
-                                    //     setCargos(e.target.value)
-                                    // }}
-
-                                    value={cargos}
-                                    
+                                    value=""
+                                    {...register("departamento")}
                                 >
-                                    <option  disabled selected value="Selecione">Selecione</option>
-
-                                    {
-                                        cargos.map((cargo: any) => {
-                                            return <option
-                                                value={cargo.id}
-                                                key={cargo.id}
-                                            >
-                                                {cargo.nome_cargo}
-                                            </option>
-                                        })
-                                    }
+                                    <option disabled selected value="Selecione">Selecione</option>
                                 </select>
                             </DivInput>
                             <BotaoContainer>
                                 <BotaoPadrao
-                                    largura='200px'
+                                    type="submit"
+
                                 >
                                     Salvar
                                 </BotaoPadrao>
@@ -344,3 +379,4 @@ const CadastroColaborador = () => {
 }
 
 export default CadastroColaborador
+

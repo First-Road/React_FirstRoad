@@ -35,8 +35,15 @@ const Secao = styled.section`
 
 
 const TelaTrilha = () => {
+<<<<<<< HEAD
     const [conteudo, setConteudo] = useState<any[]>([])
     
+=======
+    const [conteudo, setconteudo] = useState<any>([])
+    const [concluido, setConcluido] = useState<boolean>(false)
+
+
+>>>>>>> 4dcecc00f5db136dc329f7ee4f98bc9cccec5d9c
     function listarConteudos() {
         api.get("conteudo" )
             .then((response: any) => {
@@ -46,6 +53,12 @@ const TelaTrilha = () => {
             .catch((error: any) => {
                 console.log("Error ao realizar um requisição", error);
             })
+    }
+
+    function verificarConteudoConcluido() {
+      if(conteudo.concluido){
+        
+      }
     }
 
     const Titulo = styled.div`
@@ -67,6 +80,7 @@ const TelaTrilha = () => {
 
     useEffect(() => {
         listarConteudos();
+        verificarConteudoConcluido();
     }, [])
     return (
         <>
