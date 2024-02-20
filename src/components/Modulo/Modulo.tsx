@@ -179,7 +179,7 @@ const Modulo = (props: ModuloProps) => {
             </Conteudo>
 
             <ContainerBotao>
-                <BotaoPadrao>Finalizar</BotaoPadrao>
+                <BotaoPadrao >Finalizar</BotaoPadrao>
             </ContainerBotao>
         </Secao>
     )

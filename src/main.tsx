@@ -4,7 +4,6 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Home from './pages/Colaborador/Home/index'
 import EditarPerfil from './pages/Colaborador/EditarPerfil'
 import Avatar from './pages/Colaborador/Avatar'
-import Trilha from './pages/Colaborador/Trilha'
 import Suporte from './pages/Colaborador/Suporte'
 import Certificados from './pages/Colaborador/Certificados'
 import VisualizarCertificado from './pages/Colaborador/VisualizarCertificado'
@@ -34,7 +33,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Route path='/home' element={<Home />} />
         <Route path='/editar' element={<EditarPerfil />} />
         <Route path='/avatar' element={<Avatar />} />
-        <Route path='/trilha' element={<Trilha />} />
         <Route path='/suporte' element={<Suporte />} />
         <Route path='/certificados' element={<Certificados />} />
         <Route path='/visualizarCertificado' element={<VisualizarCertificado />} />

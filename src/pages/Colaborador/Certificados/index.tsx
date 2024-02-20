@@ -15,6 +15,12 @@ const Secao = styled.section`
     height: 100dvh;
     gap: 20px;
     background-color: #F3F3F3;
+    @media screen and (max-width: 1000px) {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 5px;
+    }
 
     h1{
         font-family: PoppinsBold;
@@ -26,6 +32,7 @@ const Secao = styled.section`
     p{
         font-size: 20px;
         color: black;
+        text-align: center;
     }
 `
 

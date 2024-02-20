@@ -15,6 +15,12 @@ const Secao = styled.section`
     justify-content: center;
     align-items: center;
     background-color: #F3F3F3;
+    @media screen and (max-width: 1000px) {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 5px;
+    }
     
         
     img{

@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 interface ItemProps {
     titulo: string;
     descricao: string;
-    id: string;
+    id?: string;
 }
 
 const LinkEstilizado = styled(Link)`
@@ -27,6 +27,9 @@ const LinkEstilizado = styled(Link)`
         display: flex;
         align-items: flex-start;
         justify-content: center;
+        @media screen and (max-width: 420px){
+            padding: 0px 5px;
+        }
     }
     &:hover{
         background-color: var(--principal-cor-4);
@@ -59,10 +62,13 @@ const NavegacaoEstilizada = styled.li`
     height: 250px;
     background-color: var(--principal-cor-2);
     border-radius: 25px;
-
+    @media screen and (max-width: 520px) {
+        width: 200px;
+        height: 300px;
+    }
     @media screen and (max-width: 420px){
-        width: 130px;
-        height: 130px;
+        width: 300px;
+        height: 165px;
     }
 `
 

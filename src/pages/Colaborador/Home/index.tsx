@@ -5,6 +5,7 @@ import NavegacaoHome from "../../../components/NavegacaoHome";
 import { FaUser } from 'react-icons/fa'
 import { FaTruck, FaMapMarkedAlt, FaAddressBook } from 'react-icons/fa'
 import LinksAsideColaborador from "../../../components/LinksAsideColaborador/LinksAsideColaborador";
+import * as Icon from '@phosphor-icons/react'
 
 
 const ListaEstilizada = styled.div`
@@ -31,8 +32,6 @@ const ListaEstilizada = styled.div`
         height: 100%;
         position: absolute;
         left: 5px;
-
-
     }
 
 
@@ -65,14 +64,14 @@ const Home = () => {
 
 
 
-                        <NavegacaoHome toValue="/Trilha" icone={<FaMapMarkedAlt size={50} />} >
+                        <NavegacaoHome toValue="/listaTrilha" icone={<FaMapMarkedAlt size={50} />} >
                             Trilha
                         </NavegacaoHome>
 
 
 
-                        <NavegacaoHome toValue="" icone={<FaAddressBook size={50} />} >
-                            Agenda
+                        <NavegacaoHome toValue="/certificados" icone={<Icon.Files size={50} color="#FFFFFF" weight="fill" />} >
+                            Certificados
                         </NavegacaoHome>
 
                     </ul>

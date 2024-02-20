@@ -1,12 +1,12 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import logoCaminhoes from '../../assets/icons/logocaminhoes.png'
 import fotoPadrao from '../../assets/icons/fotopadrao_user_aside.svg'
 import { FaPen } from 'react-icons/fa'
 import { ImExit } from "react-icons/im"
 import LogoFirstRoad from '../../assets/icons/Logo_FirstRoad_aside.svg'
-import { ReactNode, useEffect, useState } from "react";
 import { TiThMenu } from 'react-icons/ti'
+import { useState } from "react";
 
 
 const Icone = styled(Link)`
@@ -14,7 +14,7 @@ const Icone = styled(Link)`
     
     @media screen and (max-width:1000px){
         display: flex;
-        background-color: var(--principal-cor-2);
+        background-color:  ${(props: any) => props.$menuAtivo ? "#025E73" : '#048ABF'};
         padding: 7px;
         border-radius: 0 15px 15px 0;
         position: absolute;
@@ -24,17 +24,16 @@ const Icone = styled(Link)`
     
 `
 const SombraEstilizada = styled.div`
-
     @media screen and (max-width: 1000px) {
         width: 100vw;
         background-color: #0000004f;
         position: fixed;
         top: 0;
-        right: 110vw;
+        left: ${(props: any) => props.$ativoSombra ? '0' : '100vw'};
         overflow: hidden;
         transition: .5s;
         backdrop-filter: blur(10px);
-        z-index: 2;
+        z-index: 3;
     }
 `
 
@@ -85,8 +84,8 @@ const MenuEstilizado = styled.aside`
                 padding: 0;
                 align-items: flex-start;
                 gap: 20px;
-                }
             }
+        }
 
         footer{
             display: flex;
@@ -98,10 +97,7 @@ const MenuEstilizado = styled.aside`
                 cursor: pointer;
             }
         }
-
-
     }
-
 `
 
 
@@ -109,46 +105,56 @@ const MenuEstilizado = styled.aside`
 
 
 
-const MenuLateral = ({ children, toValue, ativo = false }: any) => {
+const MenuLateral = ({ children, toValue, ativo = false, menuAtivo = false }: any) => {
+    const [ativoSombra, setAtivoSombra] = useState(false);
+    const navigate = useNavigate()
     addEventListener("resize", () => {
-        const aside: any = document.getElementById("aside")
         const eventoMenu: any = window.innerWidth
-        if (eventoMenu >= "1000") {
-          aside.style.left = "0px"
+        const aside: any = document.getElementById("aside")
+        if (eventoMenu >= 1000) {
+            aside.style.left = "0px"
         }
         else {
-          aside.style.left = "-265px"
-    
+            aside.style.left = "-265px"
         }
-      });
-    
-      function mostrarMenu() {
-    
+    });
+
+    function mostrarMenu(event: any) {
+        event.preventDefault()
+
         const sombra: any = document.getElementById("sombra")
         const body: any = document.getElementById("body")
         const aside: any = document.getElementById("aside")
-    
-        if (window.getComputedStyle(aside).left == "0px") {
-          aside.style.left = "-265px"
-          sombra.style.right = "110vw"
+
+        if (window.getComputedStyle(aside!).left == "0px") {
+            aside.style.left = "-265px"
+            setAtivoSombra(false)
         }
         else {
-          aside.style.left = "0px"
-          sombra.style.right = "0px"
+            aside.style.left = "0px"
+            setAtivoSombra(true)
         }
-      }
+    }
+
+    const realizarLogout = () => {
+        localStorage.removeItem("token");
+        navigate("/");
+    }
+
 
 
     return (
         <>
-            <SombraEstilizada id="sombra" />
+            
+            <SombraEstilizada $ativoSombra={ativoSombra}/>
             <MenuEstilizado $ativo={ativo} id="aside" >
+            
 
                 <div>
 
                     <img src={logoCaminhoes} alt="logo caminhoes" />
 
-                    <Icone onClick={mostrarMenu} >
+                    <Icone onClick={mostrarMenu} $menuAtivo={menuAtivo}>
                         <TiThMenu size={30} color='#FFFFFF' />
                     </Icone>
 
@@ -169,7 +175,7 @@ const MenuLateral = ({ children, toValue, ativo = false }: any) => {
 
                     <footer>
                         <div>
-                            <ImExit size={25} color="#FFFFFF" />
+                            <ImExit size={25} color="#FFFFFF" onClick={realizarLogout} />
                         </div>
                         <img src={LogoFirstRoad} alt="" />
                     </footer>

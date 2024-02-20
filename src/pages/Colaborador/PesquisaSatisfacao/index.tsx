@@ -198,7 +198,6 @@ const PesquisaSatisfacao = () => {
                     <textarea name="" id=""></textarea>
                     <BotaoContainer>
                         <BotaoPadrao
-                            estilizar={{ width: "200px" }}
                         >
                             Enviar
                         </BotaoPadrao>

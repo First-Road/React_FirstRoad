@@ -5,6 +5,7 @@ import LinksAsideColaborador from "../../../components/LinksAsideColaborador/Lin
 import BotaoTrilha from "../../../components/BotaoTrilha"
 import api from "../../../utils/api";
 import { useEffect, useState } from "react";
+
 const Secao = styled.section`
     background-image: url(../../../../public/EstradaDefinitiva.jpeg);
     flex-grow: 1;
@@ -17,12 +18,31 @@ const Secao = styled.section`
     background-position: 70%;
     padding-top: 25px;
 
+    @media screen and (max-width: 1000px) {
+
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 5px;
+
+    }
+
     h1{
         font-size: 35px;
         font-family: PoppinsBold;
         color: white;
-        width: 51%;
+        width: 645px;
         margin: 0;
+
+        @media screen and (max-width: 700px){
+            width: 400px;
+            font-size: 25px;
+        }
+
+        @media screen and (max-width: 420px){
+           width: 280px;
+            font-size: 25px;
+        }
     }
     ul{
         list-style: none;
@@ -38,8 +58,6 @@ const Secao = styled.section`
 const ListaTrilha = () => {
     const [trilha, setTrilha] = useState<any>([])
     function listarTrilhas() {
-
-
         api.get("trilha")
             .then((response: any) => {
                 setTrilha(response.data);
@@ -70,12 +88,12 @@ const ListaTrilha = () => {
                             trilha.map((trilha: any) => {
                                 return <BotaoTrilha
                                     key={trilha.id}
-                                    toValue="/PGModulos"
+                                    toValue={"/telaTrilha"}
                                     titulo={trilha.titulo_trilha}
                                     descricao={trilha.descricao_trilha}
                                 />
                             })
-                        }
+                        } 
 
                     </ul>
                 </Secao>

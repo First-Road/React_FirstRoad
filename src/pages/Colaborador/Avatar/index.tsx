@@ -14,11 +14,18 @@ import Truck from '../../../assets/image/Scania Truck.jpeg'
 import Porsche from '../../../assets/image/Porsche.jpeg'
 import Ducati from '../../../assets/image/Ducati.jpeg'
 import LinksAsideColaborador from "../../../components/LinksAsideColaborador/LinksAsideColaborador"
+import BotaoPadrao from "../../../components/BotaoPadrao/BotaoPadrao"
+import { Link } from "react-router-dom"
 
 
 const SlideContainer = styled(Swiper)`
     width: 370px;
     height: 370px;
+
+    @media screen and (max-width: 550px){
+        width: 300px;
+        height: 300px;
+    }
     
 `
 const SlideEstilizado = styled(SwiperSlide)`
@@ -75,6 +82,13 @@ padding-top: 20px;
 width: 100%;
 height: 100dvh;
 background-color: #F3F3F3;
+
+    @media screen and (max-width: 1000px) {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 5px;
+    }
 `
 
 const H1Estilizado = styled.h1`
@@ -85,11 +99,27 @@ const H1Estilizado = styled.h1`
 
 `
 
-const PEstilizado =styled.p`
+const PEstilizado = styled.p`
     margin: 0;
     font-size: 20px;
     width: 900px;
     text-align: center;
+
+    @media screen and (max-width: 1000px){
+        width: 400px;
+    }
+`
+
+const LinkEstilizado = styled(Link)`
+    width: 120px;
+    height: 30px;
+    background-color: white;
+    color: black;
+    text-decoration: none;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `
 
 
@@ -117,6 +147,9 @@ const Avatar = () => {
                             <div className="intro">
                                 <h2>Fusca</h2>
                                 <p>O <span>Fusca</span> foi o primeiro modelo de automóvel fabricado pela Volkswagen, foi o carro mais vendido do mundo. é um carro popular compacto. tenha a sensação nostálgica nessa viagem dirigindo nosso clássico.</p>
+                                <section>
+                                    <LinkEstilizado to="/listaTrilha">Selecionar</LinkEstilizado>
+                                </section>
                             </div>
                         </SlideEstilizado>
 
@@ -125,6 +158,9 @@ const Avatar = () => {
                             <div className="intro">
                                 <h2>Lamborghini</h2>
                                 <p>A <span>Lamborghini</span> ícone indiscutível no mundo automobilístico, personifica o luxo uma fusão perfeita entre elegância e agressividade, capturando a atenção de todos que têm o privilégio de testemunhar sua presença. </p>
+                                <section>
+                                    <LinkEstilizado to="/listaTrilha">Selecionar</LinkEstilizado>
+                                </section>
                             </div>
                         </SlideEstilizado>
 
@@ -133,6 +169,9 @@ const Avatar = () => {
                             <div className="intro">
                                 <h2>Scania Truck</h2>
                                 <p>Os caminhões da <span>Scania</span> verdadeiros colossos das estradas, personificam a robustez e a confiabilidade que definem a reputação dessa renomada marca. são verdadeiros parceiros de negócios na jornada pelo sucesso logístico.</p>
+                                <section>
+                                    <LinkEstilizado to="/listaTrilha">Selecionar</LinkEstilizado>
+                                </section>
                             </div>
                         </SlideEstilizado>
 
@@ -141,6 +180,9 @@ const Avatar = () => {
                             <div className="intro">
                                 <h2>Porsche</h2>
                                 <p>Os carros da <span>Porsche</span> são sinônimos de performance excepcional, design icônico e uma herança de engenharia inigualável. é uma expressão de paixão e comprometimento com a arte da condução.</p>
+                                <section>
+                                    <LinkEstilizado to="/listaTrilha">Selecionar</LinkEstilizado>
+                                </section>
                             </div>
                         </SlideEstilizado>
 
@@ -149,6 +191,9 @@ const Avatar = () => {
                             <div className="intro">
                                 <h2>Ducati</h2>
                                 <p>Montar uma moto da <span>Ducati</span> não é apenas conduzir; é participar de uma tradição de excelência, onde a paixão pela velocidade e a busca pela perfeição se unem para criar uma experiência única sobre duas rodas.</p>
+                                <section>
+                                    <LinkEstilizado to="/listaTrilha">Selecionar</LinkEstilizado>
+                                </section>
                             </div>
                         </SlideEstilizado>
                     </SlideContainer>

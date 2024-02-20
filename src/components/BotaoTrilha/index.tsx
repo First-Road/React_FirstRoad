@@ -34,9 +34,13 @@ const NavegacaoEstilizada = styled.li`
     background-color: var(--principal-cor-2);
     border-radius: 25px;
 
+    @media screen and (max-width: 700px){
+        flex-wrap: wrap;
+        width: 400px;
+    }
+
     @media screen and (max-width: 420px){
-        width: 130px;
-        height: 130px;
+        width: 280px;
     }
 `
 
@@ -46,15 +50,31 @@ const TituloCard = styled.span`
     font-family: PoppinsBold;
     width: 100%;
     justify-content: flex-start;
-    padding: 20px 0px 0px 30px;
+    padding: 0px 0px 0px 30px;
     margin: 0;
+
+    @media screen and (max-width: 700px){
+        flex-wrap: wrap;
+        width: 400px;
+        padding: 0px 0px 0px 20px;
+    }
+
+    @media screen and (max-width: 420px){
+        align-items: center;
+        justify-content: center;
+        padding: 0px;
+        font-size: 35px;
+    }
 `
 
 const Paragrafo = styled.p`
     font-size: 14px;
-    width: 100%;
-    padding-left: 30px;
+    width: 95%;
     margin: 0;
+    @media screen and (max-width: 420px){
+        width: 280px;
+        display: none;
+    }
 
     span{
         font-size: 16px;

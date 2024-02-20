@@ -18,7 +18,7 @@ const BotaoEstilizado = styled.button<CSSObject>`
 `
 
 type Props = {
-    type: any
+    type?: any
     children: any
 }
 

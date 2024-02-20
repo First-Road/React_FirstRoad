@@ -4,7 +4,6 @@ import MenuLateral from "../../../components/MenuLateral/MenuLateral"
 import api from "../../../utils/api"
 import styled from "styled-components"
 import NavegacaoTelaTrilha from "../../../components/NavegacaoTelaTrilha"
-import { useParams } from "react-router-dom"
 
 
 const Secao = styled.section`
@@ -18,6 +17,24 @@ const Secao = styled.section`
     background-position: 70%;
     padding-top: 25px;
 
+    h1{
+        display: flex;
+        justify-content: flex-start;
+        font-size: 35px;
+        font-family: PoppinsBold;
+        color: white;
+        margin: 0;
+        height: 400px;
+        align-items: center;
+    }
+
+    @media screen and (max-width: 1000px) {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 5px;
+    }
+
     
     ul{
         list-style: none;
@@ -27,7 +44,7 @@ const Secao = styled.section`
         justify-content: center;
         flex-wrap: wrap;
         height: 100%;
-        align-items: flex-start;
+        align-items: center;
         
     }
 `
@@ -50,30 +67,15 @@ const TelaTrilha = () => {
             })
     }
 
-    function verificarConteudoConcluido() {
-      if(conteudo.concluido){
-        
-      }
-    }
 
-    const Titulo = styled.div`
-        width: 80%;
-        padding: 80px;
-        h1{
-        width: 100%;
-        display: flex;
-        justify-content: flex-start;
-        font-size: 35px;
-        font-family: PoppinsBold;
-        color: white;
-        margin: 0;
-        }
 
-    `
+   
+       
+
+    
 
     useEffect(() => {
         listarConteudos();
-        verificarConteudoConcluido();
     }, [])
     return (
         <>
@@ -82,9 +84,7 @@ const TelaTrilha = () => {
                 <MenuLateral />
 
                 <Secao>
-                    <Titulo>
                         <h1>Meus Conteúdos</h1>
-                    </Titulo>
 
 
                     <ul>
@@ -97,7 +97,9 @@ const TelaTrilha = () => {
                                     descricao={conteudo.descricao_conteudo}
                                 />
                             })
-                        }
+                        } 
+
+        
                     </ul>
                 </Secao>
 

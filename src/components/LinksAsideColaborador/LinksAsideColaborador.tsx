@@ -1,4 +1,4 @@
-import { FaAddressBook, FaHome, FaInfoCircle, FaMapMarkedAlt, FaTruck, FaUser} from "react-icons/fa"
+import { FaHome, FaInfoCircle, FaMapMarkedAlt, FaTruck} from "react-icons/fa"
 import MenuItemNavegacao from "../MenuItemNavegação/MenuItemNavegacao"
 import * as Icon from '@phosphor-icons/react'
 
@@ -16,15 +16,10 @@ const LinksAsideColaborador = () => {
 
 
 
-            <MenuItemNavegacao toValue="/trilha" icone={<FaMapMarkedAlt size={25} color="#FFFFFF" />} >
+            <MenuItemNavegacao toValue="/listaTrilha" icone={<FaMapMarkedAlt size={25} color="#FFFFFF" />} >
                 Trilha
             </MenuItemNavegacao>
 
-
-
-            <MenuItemNavegacao toValue="" icone={<FaAddressBook size={25} color="#FFFFFF" />} >
-                Agenda
-            </MenuItemNavegacao>
 
 
 
