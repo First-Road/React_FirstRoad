@@ -1,6 +1,6 @@
 export const data = [
     {
-      question: "Quantas empresas compõem o grupo Volkswagen?",
+      question: " Quantas empresas compõem o grupo Volkswagen?",
       option1: "3",
       option2: "5",
       option3: "10",
@@ -8,7 +8,7 @@ export const data = [
       ans: 4, // A Volkswagen é composta por 7 marcas: Volkswagen, Audi, SEAT, Škoda, Bentley, Bugatti e Lamborghini.
     },
     {
-      question: "Quantos anos tem o grupo Volkswagen?",
+      question: " Quantos anos tem o grupo Volkswagen?",
       option1: "10 anos",
       option2: "5 anos",
       option3: "50 anos",
@@ -16,7 +16,7 @@ export const data = [
       ans: 4,
     },
     {
-      question: "Em qual bairro de São Paulo está localizado o escritório da Volkswagen?",
+      question: " Em qual bairro de São Paulo está localizado o escritório da Volkswagen?",
       option1: "Jabaquara",
       option2: "Tucuruvi",
       option3: "Penha",
@@ -24,7 +24,7 @@ export const data = [
       ans: 1, // O escritório da Volkswagen está localizado no bairro Jabaquara em São Paulo.
     },
     {
-      question: "Em qual dessas cidades está localizado o maior polo da Volkswagen?",
+      question: " Em qual dessas cidades está localizado o maior polo da Volkswagen?",
       option1: "Osasco",
       option2: "Anápolis",
       option3: "Resende", // A cidade de Resende, no estado do Rio de Janeiro, abriga o maior polo da Volkswagen.
@@ -32,7 +32,7 @@ export const data = [
       ans: 3,
     },
     {
-      question: "Em quantos países a Volkswagen atua?",
+      question: " Em quantos países a Volkswagen atua?",
       option1: "2 países",
       option2: "10 países",
       option3: "5 países",

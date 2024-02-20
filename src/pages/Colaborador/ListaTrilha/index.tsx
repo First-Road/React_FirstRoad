@@ -5,7 +5,7 @@ import LinksAsideColaborador from "../../../components/LinksAsideColaborador/Lin
 import BotaoTrilha from "../../../components/BotaoTrilha"
 import api from "../../../utils/api";
 import { useEffect, useState } from "react";
-
+import { useParams } from "react-router-dom"
 const Secao = styled.section`
     background-image: url(../../../../public/EstradaDefinitiva.jpeg);
     flex-grow: 1;

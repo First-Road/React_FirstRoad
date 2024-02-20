@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import EstilosGlobais from "../../../components/EstilosGlobais/EstilosGlobais";
 import MenuLateral from "../../../components/MenuLateral/MenuLateral";
 import LinksAsideColaborador from "../../../components/LinksAsideColaborador/LinksAsideColaborador";
+import { Link, useNavigate } from "react-router-dom";
 
 interface Question {
     question: string;
@@ -21,8 +22,8 @@ const Secao = styled.div`
     flex-direction: column;
     flex-grow: 1;
     justify-content: space-between;
-    /* background-image: linear-gradient(#D8C7FF, #19006c); */
     align-items: center;
+    background-color: #F3F3F3;
     
 
     @media screen and (max-width: 1000px) {
@@ -34,26 +35,33 @@ const Secao = styled.div`
     hr{
         height: 2px;
         border: none;
-        width: 90%;
-        background-color: #707070;
+        width: 80%;
+        background-color: black;
+        margin: 0;
+        margin-top: 10px;
+        
     }
 
     h1{
+        margin: 0px;
         font-size: 35px;
-        margin-left: 40px;
         width: 100%;
+        padding-top: 15px;
     }
 
     h2{
         font-size: 25px;
-        margin-left: 40px;
-        width: 70%;
+        width: 80%;
+    }
+
+    ul{
+        padding: 0;
     }
 
     li{
         display: flex;
         align-items: center;
-        width: 600px;
+        width: 80%;
         height: 70px;
         padding-left: 15px;
         border: 1px solid #686868; 
@@ -61,6 +69,7 @@ const Secao = styled.div`
         margin-bottom: 20px;
         font-size: 20px;
         cursor: pointer;  
+        background-color: #f3f3f3;
     }
 
     button{
@@ -90,33 +99,66 @@ const Secao = styled.div`
 `
 
 const Elementos = styled.div`
+    height: 100%;
     display: flex;
-    flex-direction: column;    
+    flex-direction: column;
+    justify-content: space-between;
+
+    .reset{
+        display: flex;
+        flex-direction: column;
+        justify-content: center !important;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+    }
+
+    div{
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        padding-bottom: 5px;
+    }
 `
 
 const Index = styled.div`
     font-size: 18px;
 `
-
 const Quiz: React.FC = () => {
     const [index, setIndex] = useState<number>(0);
     const [question, setQuestion] = useState<Question>(data[index]);
+    const [selectedOption, setSelectedOption] = useState<number | null>(null);
     const [result, setResult] = useState<boolean>(false);
     const [score, setScore] = useState<number>(0);
+    const optionRefs = useRef<(HTMLLIElement | null)[]>([]);
 
     const checkAns = (ans: number) => {
-        if (question.ans === ans) {
-            setScore(prevScore => prevScore + 1);
-        }
-        next();
+        setSelectedOption(ans);
     };
 
     const next = () => {
-        if (index + 1 < data.length) {
-            setIndex(prevIndex => prevIndex + 1);
-            setQuestion(data[index + 1]);
-        } else {
-            setResult(true);
+        if (selectedOption !== null) {
+            const selectedOptionIndex = selectedOption - 1;
+            if (selectedOption === question.ans) {
+                setScore(prevScore => prevScore + 1);
+                optionRefs.current[selectedOptionIndex]?.classList.add("correct");
+            } else {
+                optionRefs.current[selectedOptionIndex]?.classList.add("wrong");
+                optionRefs.current[question.ans - 1]?.classList.add("correct");
+            }
+
+            setTimeout(() => {
+                if (index + 1 < data.length) {
+                    setIndex(prevIndex => prevIndex + 1);
+                    setQuestion(data[index + 1]);
+                    setSelectedOption(null);
+                    clearOptionStyles();
+                } else {
+                    setResult(true);
+                }
+            }, 1000); // Delay for visual effect
         }
     };
 
@@ -124,8 +166,24 @@ const Quiz: React.FC = () => {
         setIndex(0);
         setQuestion(data[0]);
         setScore(0);
+        setSelectedOption(null);
         setResult(false);
+        clearOptionStyles();
     };
+
+    const clearOptionStyles = () => {
+        optionRefs.current.forEach(ref => {
+            if (ref) {
+                ref.classList.remove("correct", "wrong");
+            }
+        });
+    };
+
+    const navigate = useNavigate();
+
+    const Voltar = () =>{
+        navigate(-1)
+    }
 
     return (
         <>
@@ -137,12 +195,12 @@ const Quiz: React.FC = () => {
                 <Secao className="container">
                     <Elementos>
                         <h1>Teste seu Conhecimento</h1>
-                        <hr />
                         {result ? (
-                            <>
+                            <div className="reset">
                                 <h2>Sua pontuação foi {score} pontos de {data.length}!</h2>
                                 <button onClick={reset}>Refazer Quiz</button>
-                            </>
+                                <button onClick={Voltar}></button>
+                            </div>
                         ) : (
                             <>
                                 <h2>
@@ -153,7 +211,8 @@ const Quiz: React.FC = () => {
                                         (option, idx) => (
                                             <li
                                                 key={idx}
-                                                className={idx + 1 === question.ans ? "correct" : ""}
+                                                ref={el => (optionRefs.current[idx] = el)}
+                                                className={selectedOption !== null && idx + 1 === selectedOption ? "selected" : ""}
                                                 onClick={() => checkAns(idx + 1)}
                                             >
                                                 {option}

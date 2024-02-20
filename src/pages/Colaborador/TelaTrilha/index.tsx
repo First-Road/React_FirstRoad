@@ -49,17 +49,15 @@ const Secao = styled.section`
     }
 `
 
-const TelaTrilha = () => {
-    const [conteudo, setconteudo] = useState<any>([])
-    const [concluido, setConcluido] = useState<boolean>(false)
 
+const TelaTrilha = () => {
+
+    const [conteudo, setConteudo] = useState<any[]>([])
 
     function listarConteudos() {
-
-
-        api.get("/conteudo")
+        api.get("conteudo" )
             .then((response: any) => {
-                setconteudo(response.data);
+                setConteudo(response.data)
                 console.table(response.data)
             })
             .catch((error: any) => {
@@ -73,6 +71,8 @@ const TelaTrilha = () => {
        
 
     
+
+
 
     useEffect(() => {
         listarConteudos();
@@ -95,6 +95,7 @@ const TelaTrilha = () => {
                                     key={conteudo.id}
                                     titulo={conteudo.titulo_conteudo}
                                     descricao={conteudo.descricao_conteudo}
+
                                 />
                             })
                         } 
