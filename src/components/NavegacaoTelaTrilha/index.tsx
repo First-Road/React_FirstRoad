@@ -15,13 +15,13 @@ const LinkEstilizado = styled(Link)`
     height: 100%;
     justify-content: center;
     color: #FFFFFF;
-    gap: 10px;
+    gap: 25px;
     text-decoration: none;
     
     
     p{
         height: 100%;
-        font-size: 16px;
+        font-size: 14px;
         margin: 0px;
         padding: 10px;
         display: flex;
@@ -45,7 +45,7 @@ const ContainerTitulo = styled.div`
     height: 20%;
     span{
         height: 100%;
-        font-size: 20px;
+        font-size: 18px;
         margin: 0px;
         font-family: PoppinsBold;
         display: flex;
