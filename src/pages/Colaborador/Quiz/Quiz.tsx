@@ -32,45 +32,39 @@ const Secao = styled.div`
         position: absolute;
         left: 5px;
     }
-    hr{
-        height: 2px;
-        border: none;
-        width: 80%;
-        background-color: black;
-        margin: 0;
-        margin-top: 10px;
-        
-    }
+
 
     h1{
         margin: 0px;
         font-size: 35px;
         width: 100%;
         padding-top: 15px;
+        @media screen and (max-width: 1000px) {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+        @media screen and (max-width: 750px) {
+            font-size: 25px;
+        }
     }
 
     h2{
         font-size: 25px;
         width: 80%;
+        @media screen and (max-width: 1000px) {
+            width: 100%;
+            justify-content: center;
+        }
+        @media screen and (max-width: 750px) {
+            font-size: 20px;
+        }
     }
 
     ul{
         padding: 0;
     }
 
-    li{
-        display: flex;
-        align-items: center;
-        width: 80%;
-        height: 70px;
-        padding-left: 15px;
-        border: 1px solid #686868; 
-        border-radius: 8px;
-        margin-bottom: 20px;
-        font-size: 20px;
-        cursor: pointer;  
-        background-color: #f3f3f3;
-    }
 
     button{
         width: 200px;
@@ -107,7 +101,7 @@ const Elementos = styled.div`
     .reset{
         display: flex;
         flex-direction: column;
-        justify-content: center !important;
+        justify-content: center ;
         align-items: center;
         width: 100%;
         height: 100%;
@@ -120,7 +114,35 @@ const Elementos = styled.div`
         align-items: center;
         gap: 15px;
         padding-bottom: 5px;
+        @media screen and (max-width: 1000px) {
+            width: 90%;
+        }
+        @media screen and (max-width: 1000px) {
+            width: 100%;
+        }
+
     }
+`
+
+const Lista = styled.li`
+    display: flex;
+        align-items: center;
+        width: 80%;
+        height: 70px;
+        padding-left: 15px;
+        border: 1px solid #686868; 
+        border-radius: 8px;
+        margin-bottom: 20px;
+        font-size: 20px;
+        cursor: pointer;  
+        background-color: #f3f3f3;
+        @media screen and (max-width: 1000px) {
+            width: 100%;
+            justify-content: center;
+        }
+        @media screen and (max-width: 750px) {
+            width: 400px;
+        }
 `
 
 const Index = styled.div`
@@ -181,7 +203,7 @@ const Quiz: React.FC = () => {
 
     const navigate = useNavigate();
 
-    const Voltar = () =>{
+    const Voltar = () => {
         navigate(-1)
     }
 
@@ -209,14 +231,14 @@ const Quiz: React.FC = () => {
                                 <ul>
                                     {[question.option1, question.option2, question.option3, question.option4].map(
                                         (option, idx) => (
-                                            <li
+                                            <Lista
                                                 key={idx}
-                                                ref={el => (optionRefs.current[idx] = el)}
+                                                ref={(el: HTMLLIElement | null) => (optionRefs.current[idx] = el)}
                                                 className={selectedOption !== null && idx + 1 === selectedOption ? "selected" : ""}
                                                 onClick={() => checkAns(idx + 1)}
                                             >
                                                 {option}
-                                            </li>
+                                            </Lista>
                                         )
                                     )}
                                 </ul>

@@ -17,6 +17,9 @@ const LinkEstilizado = styled(Link)`
     color: #FFFFFF;
     gap: 25px;
     text-decoration: none;
+    @media screen and (max-width: 420px){
+        gap: 40px;
+    }
     
     
     p{
@@ -54,7 +57,7 @@ const ContainerTitulo = styled.div`
         padding: 20px 10px 0px 10px;
     }
 `
-    
+
 
 
 const NavegacaoEstilizada = styled.li`

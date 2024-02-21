@@ -4,7 +4,7 @@ import { MdQuiz } from "react-icons/md";
 import { FaInfoCircle } from 'react-icons/fa'
 import styled from "styled-components";
 import { ReactNode } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import BotaoPadrao from "../BotaoPadrao/BotaoPadrao";
 
 interface ModuloProps {
@@ -20,6 +20,13 @@ const Secao = styled.section`
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
+
+    @media screen and (max-width: 1000px) {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 5px;
+    }
 `
 
 const Header = styled.div`
@@ -69,6 +76,9 @@ const LinksContainer = styled.div`
     justify-content: space-between;
     @media screen and (max-width: 768px){
         width: 80%;
+    }
+    @media screen and (max-width: 450px){
+        width: 90%;
     }
 `
 
@@ -147,6 +157,12 @@ const ContainerBotao = styled.div`
 
 
 const Modulo = (props: ModuloProps) => {
+    const navigate = useNavigate();
+
+    const Voltar = () => {
+        navigate(-1)
+    }
+
     return (
         <Secao>
             <Header>
@@ -163,13 +179,13 @@ const Modulo = (props: ModuloProps) => {
                             <span>Material do Módulo</span>
                         </div>
                     </LinkEstilizado>
-                    <LinkEstilizado to=''>
+                    <LinkEstilizado to='/quiz'>
                         <div>
                             <Quiz />
                             <span>Quiz</span>
                         </div>
                     </LinkEstilizado>
-                    <LinkEstilizado to=''>
+                    <LinkEstilizado to='/suporte'>
                         <div>
                             <Suporte />
                             <span>Suporte</span>
@@ -179,7 +195,7 @@ const Modulo = (props: ModuloProps) => {
             </Conteudo>
 
             <ContainerBotao>
-                <BotaoPadrao >Finalizar</BotaoPadrao>
+                <BotaoPadrao onClick={Voltar}>Finalizar</BotaoPadrao>
             </ContainerBotao>
         </Secao>
     )

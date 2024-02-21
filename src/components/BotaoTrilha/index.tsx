@@ -40,7 +40,7 @@ const NavegacaoEstilizada = styled.li`
     }
 
     @media screen and (max-width: 420px){
-        width: 280px;
+        width: 310px;
     }
 `
 
@@ -60,10 +60,12 @@ const TituloCard = styled.span`
     }
 
     @media screen and (max-width: 420px){
+        width: 300px;
         align-items: center;
         justify-content: center;
         padding: 0px;
-        font-size: 35px;
+        font-size: 25px;
+        text-align: center;
     }
 `
 

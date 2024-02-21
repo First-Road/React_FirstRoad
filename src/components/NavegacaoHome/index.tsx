@@ -38,6 +38,10 @@ const NavegacaoEstilizada = styled.li`
         width: 130px;
         height: 130px;
     }
+
+    span{
+        font-size: 18px;
+    }
 `
 
 

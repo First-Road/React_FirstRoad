@@ -20,11 +20,12 @@ const BotaoEstilizado = styled.button<CSSObject>`
 type Props = {
     type?: any
     children: any
+    onClick?: any
 }
 
-const BotaoPadrao = ( {children, type}: Props) => {
+const BotaoPadrao = ( {children, type, onClick}: Props) => {
     return (
-        <BotaoEstilizado  type={type}>{children}</BotaoEstilizado>
+        <BotaoEstilizado onClick={onClick} type={type}>{children}</BotaoEstilizado>
 
     )
 }

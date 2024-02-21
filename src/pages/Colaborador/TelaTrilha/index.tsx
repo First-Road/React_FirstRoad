@@ -4,6 +4,7 @@ import MenuLateral from "../../../components/MenuLateral/MenuLateral"
 import api from "../../../utils/api"
 import styled from "styled-components"
 import NavegacaoTelaTrilha from "../../../components/NavegacaoTelaTrilha"
+import LinksAsideColaborador from "../../../components/LinksAsideColaborador/LinksAsideColaborador"
 
 
 const Secao = styled.section`
@@ -11,6 +12,7 @@ const Secao = styled.section`
     flex-grow: 1;
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
     align-items: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -24,8 +26,11 @@ const Secao = styled.section`
         font-family: PoppinsBold;
         color: white;
         margin: 0;
-        height: 400px;
         align-items: center;
+
+        @media screen and (max-width: 420px) {
+          font-size:25px;
+        }
     }
 
     @media screen and (max-width: 1000px) {
@@ -43,7 +48,6 @@ const Secao = styled.section`
         gap: 10px;
         justify-content: center;
         flex-wrap: wrap;
-        height: 100%;
         align-items: center;
         
     }
@@ -55,7 +59,7 @@ const TelaTrilha = () => {
     const [conteudo, setConteudo] = useState<any[]>([])
 
     function listarConteudos() {
-        api.get("conteudo" )
+        api.get("conteudo")
             .then((response: any) => {
                 setConteudo(response.data)
                 console.table(response.data)
@@ -67,10 +71,10 @@ const TelaTrilha = () => {
 
 
 
-   
-       
 
-    
+
+
+
 
 
 
@@ -81,10 +85,12 @@ const TelaTrilha = () => {
         <>
             <EstilosGlobais />
             <main>
-                <MenuLateral />
+                <MenuLateral>
+                    <LinksAsideColaborador />
+                </MenuLateral>
 
                 <Secao>
-                        <h1>Meus Conteúdos</h1>
+                    <h1>Meus Conteúdos</h1>
 
 
                     <ul>
@@ -98,9 +104,9 @@ const TelaTrilha = () => {
 
                                 />
                             })
-                        } 
+                        }
 
-        
+
                     </ul>
                 </Secao>
 
