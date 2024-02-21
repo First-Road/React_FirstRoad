@@ -221,7 +221,7 @@ const Quiz: React.FC = () => {
                             <div className="reset">
                                 <h2>Sua pontuação foi {score} pontos de {data.length}!</h2>
                                 <button onClick={reset}>Refazer Quiz</button>
-                                <button onClick={Voltar}></button>
+                                <button onClick={Voltar}>Concluir</button>
                             </div>
                         ) : (
                             <>

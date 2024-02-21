@@ -3,9 +3,11 @@ import EstilosGlobais from "../../../components/EstilosGlobais/EstilosGlobais"
 import styled from "styled-components"
 import logo from "../../../assets/icons/Logo_FirstRoad_Vertical_Colorido.svg"
 import { AiFillEye } from "react-icons/ai";
-import { useState } from "react";
 import { useNavigate } from 'react-router-dom'
 import api from "../../../utils/api";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 //import { UserContext } from "../../../context/auth";
 
 
@@ -21,6 +23,11 @@ const Secao = styled.section`
     background-position: center;
     width: 100%;
     height: 100dvh;
+    p{
+        margin: 0;
+        color: yellow;
+        font-size: 12px;
+    }
         
 
     form{
@@ -63,9 +70,12 @@ const LoginContainer = styled.div`
 `
 
 const InputContainer = styled.div`
+    display: flex;
+    flex-direction: column;
     width: 80%;
     height: 35px;
     position: relative;
+    gap: 10px;
     input{
         width: 100%;
         height: 100%;
@@ -74,6 +84,11 @@ const InputContainer = styled.div`
         border-bottom: 3px solid #FFFFFF;
         outline: none;
         color: white;
+        outline: none;
+
+        &:focus::placeholder{
+            color: transparent;
+        }
     
         &::placeholder{
             color: white;
@@ -147,24 +162,39 @@ const IconeSenha = styled(AiFillEye)`
     cursor: pointer;
 `
 
+type FormProps = z.infer<typeof schema>
+const schema = z.object({
+    senha: z.string().min(6, "A senha precisa ter pelo menos 6 caracteres"),
+    email: z.string().email("Por favor Digite um email valido"),
+})
+
 const Login = () => {
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors }
+    } = useForm<FormProps>({
+        criteriaMode: "all",
+        mode: "all",
+        reValidateMode: "onChange",
+        resolver: zodResolver(schema),
+        defaultValues: {
+            senha: '',
+            email: '',
+        }
+    });
 
     const navigate = useNavigate();
 
-    const [email, setEmail] = useState<string>("");
-    const [senha, setSenha] = useState<string>("");
+    // const [email, setEmail] = useState<string>("");
+    // const [senha, setSenha] = useState<string>("");
     // const [tipoUsuario, setTipoUsuario] = useState<string>("")
 
-    function realizarAutenticacao(event: any) {
-        event.preventDefault();
-
-        const usuario = {
-            email: email,
-            senha: senha
-        }
-
-        api.post("login", usuario)
-            .then((response) => {
+    const realizarAutenticacao = (data: FormProps) => {
+        console.log("submit", data)
+        api.post("login", data)
+            .then((response: any) => {
                 const decoded = (response.data.token)
                 console.log(decoded.idUsuario);
                 const tipo = decoded.tipo_usuario
@@ -182,15 +212,48 @@ const Login = () => {
                         break;
                 }
             })
-            .catch((error) => {
-                console.log(error);
-
+            .catch(() => {
+                alert("Usuario não cadastrado")
             })
 
-          
     }
 
-    
+    // function realizarAutenticacao(event: any) {
+    //     event.preventDefault();
+
+    //     // const usuario = {
+    //     //     email: email,
+    //     //     senha: senha
+    //     // }
+
+    //     api.post("login", usuario)
+    //         .then((response) => {
+    //             const decoded = (response.data.token)
+    //             console.log(decoded.idUsuario);
+    //             const tipo = decoded.tipo_usuario
+    //             localStorage.setItem("token", JSON.stringify(decoded))
+
+    //             switch (tipo) {
+    //                 case "ADMIN":
+    //                     navigate("/trilha")
+    //                     break;
+    //                 case "COLABORADOR":
+    //                     navigate("/home")
+    //                     break;
+    //                 default:
+    //                     navigate("/home")
+    //                     break;
+    //             }
+    //         })
+    //         .catch(() => {
+    //             alert("Usuario não cadastrado")
+
+    //         })
+
+
+
+
+
 
 
 
@@ -201,28 +264,49 @@ const Login = () => {
             <EstilosGlobais />
             <main>
                 <Secao>
-                    <form method="POST" onSubmit={realizarAutenticacao}>
+                    <form method="POST" onSubmit={handleSubmit(realizarAutenticacao)}>
 
                         <LoginContainer
                         >
                             <img src={logo} alt="" />
                             <h1>Login</h1>
                             <InputContainer>
-                                <input
-                                    type="email"
-                                    placeholder="E-mail"
-                                    onChange={(e) => setEmail(e.target.value)}
+                                <div>
+                                    <input
+                                        type="email"
+                                        placeholder="E-mail"
+                                        // onChange={(e) => setEmail(e.target.value)}
+                                        {...register("email")}
 
-                                />
+                                    />
+                                </div>
+
+                                <div>
+                                    {errors.email?.message && (
+                                        <p>{errors.email?.message}</p>
+                                    )}
+                                </div>
                             </InputContainer>
+
                             <InputContainer>
-                                <input
-                                    type="password"
-                                    placeholder="Senha"
-                                    onChange={(e) => setSenha(e.target.value)}
-                                />
-                                <IconeSenha />
+                                <div>
+                                    <input
+                                        type="password"
+                                        placeholder="Senha"
+                                        // onChange={(e) => setSenha(e.target.value)}
+                                        {...register("senha")}
+                                    />
+                                    <IconeSenha />
+                                </div>
+
+                                <div>
+                                    {errors.senha?.message && (
+                                        <p>{errors.senha?.message}</p>
+                                    )}
+                                </div>
+
                             </InputContainer>
+
 
                             <CheckBox>
                                 <label htmlFor="">

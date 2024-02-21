@@ -188,18 +188,9 @@ const CadastroColaborador = () => {
     const [dataFormatada, setDataFormatada] = useState<string>("");
 
 
-    //só utiliza formData quando tiver arquivos 
-    const formData = new FormData();
 
 
-    //A chave da função do append() precisa ser o mesmo nome do atributo que api retorna
-    formData.append("nome", nome);
-    formData.append("email", email);
-    formData.append("senha", senha);
-    formData.append("url_imagem", foto);
-    formData.append("nif", nif);
-    formData.append("id_unidade.complemento", unidade);
-    formData.append('data_nascimento', dataFormatada);
+   
 
     
 
