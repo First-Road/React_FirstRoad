@@ -115,7 +115,7 @@ const schema = z.object({
     confirmPassword: z.string(),
     nome: z.string().min(5, "Por favor digite um nome valido!"),
     unidades: z.string(),
-    nif: z.string().length(8, "Por favor Digite um nif de 8 caracteres"),
+    nif: z.string().max(8, "Por favor Digite um nif de 8 caracteres"),
     email: z.string().email("Por favor Digite um email valido"),
     dataNascimento: z.string(),
 }).refine((fields) => fields.password === fields.confirmPassword, {
@@ -132,6 +132,7 @@ const CadastroColaborador = () => {
     const {
         register,
         handleSubmit,
+        watch,
         formState: { errors }
     } = useForm<FormProps>({
         criteriaMode: "all",
@@ -149,10 +150,17 @@ const CadastroColaborador = () => {
         }
     });
 
+    const [foto, setFoto] = useState<any>(null);
 
+    const formData = new FormData();
+    formData.append("url_imagem", foto);
+    
+    const watchAllFields = watch();
+    
     const handleSubmitData = (data: FormProps) => {
-        console.log("submit", data, formData)
-        api.post("usuarios", data)
+        console.log("submit", data, formData, watchAllFields)
+
+        api.post("usuarios", watchAllFields)
             .then((response: any) => {
                 console.log(response);
                 alert("Usuário cadastrado com sucesso!😊🤗");
@@ -162,8 +170,11 @@ const CadastroColaborador = () => {
                 alert("Falha ao cadastrar um novo usuário");
             })
 
-    }
+            
+           
 
+    }
+    
     const [unidades, setUnidades] = useState<any[]>([])
 
     function listarUnidades() {
@@ -178,28 +189,7 @@ const CadastroColaborador = () => {
             })
     }
 
-    const [nome, setNome] = useState<string>('');
-    const [email, setEmail] = useState<string>('');
-    const [foto, setFoto] = useState<any>(null);
-    const [nif, setNif] = useState<string>("");
-    const [senha, setSenha] = useState<string>("");
-    const [unidade, setUnidade] = useState<string>("");
-    const [dataNascimento, setDataNascimento] = useState(new Date());
-    const [dataFormatada, setDataFormatada] = useState<string>("");
-
-
-
-
-   
-
     
-
-    useEffect(() => {
-        const ano = dataNascimento.getFullYear();
-        const mes = ('0' + (dataNascimento.getMonth() + 1)).slice(-2); // Adiciona um zero à esquerda para meses menores que 10
-        const dia = ('0' + dataNascimento.getDate()).slice(-2); // Adiciona um zero à esquerda para dias menores que 10
-        setDataFormatada(`${ano}-${mes}-${dia}`);
-    }, [dataNascimento]);
 
 
     function verificarCampoUpload(event: any) {
@@ -224,7 +214,7 @@ const CadastroColaborador = () => {
                 </MenuLateral>
                 <Secao>
                     <h1>Cadastrar Colaborador</h1>
-                    <input type="file" onChange={verificarCampoUpload}/>
+                    <input type="file" onChange={verificarCampoUpload} />
                     <form action="" method="POST" onSubmit={handleSubmit(handleSubmitData)}>
                         <DivInputContainer>
                             <DivInput>
@@ -233,7 +223,7 @@ const CadastroColaborador = () => {
                                     type="text"
                                     placeholder="Digite seu nome completo"
                                     {...register("nome")}
-                                    onChange={(e) => setNome(e.target.value)}
+                                    
 
                                 />
                                 {errors.nome?.message && (
@@ -248,7 +238,7 @@ const CadastroColaborador = () => {
                                     placeholder="00000000"
                                     {...register("nif")}
                                     maxLength={8}
-                                    onChange={(e) => setNif(e.target.value)}
+                                    
 
                                 />
                                 {errors.nif?.message && (
@@ -263,7 +253,7 @@ const CadastroColaborador = () => {
                                     placeholder="Digite a senha do colaborador"
                                     type="password"
                                     {...register("password")}
-                                    onChange={(e) => setSenha(e.target.value)}
+                                    
 
                                 />
                                 {errors.password?.message && (
@@ -277,7 +267,7 @@ const CadastroColaborador = () => {
                                     type="email"
                                     placeholder="email@enail.vw.com.br"
                                     {...register("email")}
-                                    onChange={(e) => setEmail(e.target.value)}
+                                    
                                 />
                                 {errors.email?.message && (
                                     <p>{errors.email?.message}</p>
@@ -291,7 +281,7 @@ const CadastroColaborador = () => {
                                 <input
                                     type="date"
                                     {...register("dataNascimento")}
-                                    onChange={(e) => setDataNascimento(new Date(e.target.value))}
+                                
                                 />
                                 {errors.dataNascimento?.message && (
                                     <p>{errors.dataNascimento?.message}</p>
@@ -306,7 +296,7 @@ const CadastroColaborador = () => {
                                     aria-placeholder="Selecione"
                                     {...register("unidades")}
                                     defaultValue="1"
-                                    onChange={(e) => setUnidade(e.target.value)}
+                                    
 
                                 >
                                     <option value="1" hidden>Selecione</option>
@@ -356,4 +346,6 @@ const CadastroColaborador = () => {
 }
 
 export default CadastroColaborador
+
+
 
